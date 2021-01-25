@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "slapp"
+version = "0.1.0"
+description = ""
+authors = ["m.semenov <0rang3max@gmail.com>"]
+readme = "README.rst"
+
+[tool.poetry.scripts]
+slapp = "slapp.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+typer = {extras = ["all"], version = "^0.3.2"}
+GitPython = "^3.1.12"
+PyYAML = "^5.4.1"
+marko = "^1.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^3.8.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
