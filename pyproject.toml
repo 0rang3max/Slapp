@@ -3,7 +3,7 @@ name = "slapp"
 version = "0.1.0"
 description = ""
 authors = ["m.semenov <0rang3max@gmail.com>"]
-readme = "README.rst"
+readme = "README.md"
 
 [tool.poetry.scripts]
 slapp = "slapp.main:app"
