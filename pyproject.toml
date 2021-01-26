@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "slapp"
-version = "0.2.0"
+version = "0.2.1"
 description = "Tool for easy deploying projects to git repo."
 authors = ["m.semenov <0rang3max@gmail.com>"]
 readme = "README.md"
