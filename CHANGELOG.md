@@ -1,3 +1,7 @@
+0.2.2
+==========
+* fixed bug with unsorted tags
+
 
 
 0.2.1
