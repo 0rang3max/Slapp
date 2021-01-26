@@ -59,11 +59,11 @@ def write_changelogs_to_file(
         return open(filename, *args, **kwargs)
 
     rendered_changelog = "\n".join(
-        [f'{bullet} {item}' for item in changelogs]
+        [f'{bullet} {item}' for item in changelogs if item]
     )
 
     with touchopen(changelog_file, 'r+') as f:
         content = f.read()
         f.seek(0)
-        f.write(f'{version}\n{divider}\n{rendered_changelog}\n{content}')
+        f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
         f.truncate()
