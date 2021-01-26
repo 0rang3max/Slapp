@@ -14,6 +14,7 @@ typer = {extras = ["all"], version = "^0.3.2"}
 GitPython = "^3.1.12"
 PyYAML = "^5.4.1"
 marko = "^1.0.1"
+confuse = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
