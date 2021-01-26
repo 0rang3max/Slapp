@@ -41,14 +41,14 @@ def release(version: str):
     write_changelogs_to_file(version, changelogs, changelog_file)
     echo_changelog(version, changelogs)
 
-    # try:
-    #     repo.git.add(changelog_file)
-    #     repo.index.commit(f'Update {changelog_file}')
-    #     repo.remotes.origin.push()
+    try:
+        repo.git.add(changelog_file)
+        repo.index.commit(f'Update {changelog_file}')
+        repo.remotes.origin.push()
 
-    # except Exception as e:
-    #     typer.echo(typer.style('Some error occured while pushing the changelog', fg=typer.colors.RED))
-    #     typer.echo(e)
+    except Exception as e:
+        typer.echo(typer.style('Some error occured while pushing the changelog', fg=typer.colors.RED))
+        typer.echo(e)
 
-    # new_tag = repo.create_tag(version, message=version)
-    # repo.remotes.origin.push(new_tag)
+    new_tag = repo.create_tag(version, message=version)
+    repo.remotes.origin.push(new_tag)
