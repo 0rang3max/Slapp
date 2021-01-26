@@ -2,8 +2,6 @@
 ==========
 * fixed bug with unsorted tags
 
-
-
 0.2.1
 ==========
 * minor fixes

@@ -14,8 +14,8 @@ DEFAULT_CONFIG = {
 
 def get_config():
     if not os.path.isfile(CONFIG_FILE):
-        typer.echo(typer.style('Config file not found.', fg=typer.colors.RED))
-        typer.echo('Create it via "slapp init_config"')
+        typer.echo(typer.style('Config file not found.', fg=typer.colors.YELLOW))
+        typer.echo('Do "slapp init" first.')
         return
     config = confuse.Configuration('slapp', __name__)
     config.set_file(CONFIG_FILE)
