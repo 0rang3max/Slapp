@@ -1,3 +1,9 @@
+v0.2.4
+==========
+* main as a default relase branch
+* config init renamed to init
+* minor fix to changelog generator
+
 0.2.2
 ==========
 * fixed bug with unsorted tags
