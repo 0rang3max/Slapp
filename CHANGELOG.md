@@ -1,6 +1,6 @@
 v0.2.4
 ==========
-* main as a default relase branch
+* main as a default release branch
 
 v0.2.3
 ==========
