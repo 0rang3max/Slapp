@@ -1,6 +1,6 @@
 # Släpp
 
-Tool for quick taggin and deploying releases to Git. Släpp automatically generates and pushes CHANGELOG file to your repo, based on your commit history.
+Tool for quick tagging and deploying releases to Git. Släpp automatically generates and pushes CHANGELOG file to your repo, based on your commit history.
 
 ### Installation
 ```bash
