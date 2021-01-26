@@ -65,5 +65,5 @@ def write_changelogs_to_file(
     with touchopen(changelog_file, 'r+') as f:
         content = f.read()
         f.seek(0)
-        f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
+        f.write(f'{version}\n{divider}\n{rendered_changelog}\n{content}')
         f.truncate()
