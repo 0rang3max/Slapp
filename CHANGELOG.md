@@ -1,8 +1,8 @@
-v0.2.4
+0.2.4
 ==========
 * main as a default release branch
 
-v0.2.3
+0.2.3
 ==========
 * config init renamed to init
 * minor fix to changelog generator
