@@ -17,7 +17,7 @@
 
 0.2.0
 ==========
-* adds tag and automticly pushes changelog to repo
+* adds tag and automtically pushes changelog to repo
 * added config
 
 v0.1
