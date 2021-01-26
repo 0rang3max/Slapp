@@ -1,0 +1,4 @@
+bullet: '*'
+changelog_file: CHANGELOG.md
+release_branch: master
+repo_directory: .git
