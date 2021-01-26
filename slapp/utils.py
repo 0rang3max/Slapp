@@ -36,13 +36,16 @@ def parse_changelogs_from_repo(repo: git.Repo) -> list:
     return changelogs
 
 
-def echo_changelog(version, changelog):
-    typer.echo(typer.style(
-        f'{version} changelog:',
-        fg=typer.colors.BLUE,
-        bold=True
-    ))
-    typer.echo('\n'.join(changelog))
+def echo_changelog(version, changelogs):
+    if changelogs:
+        typer.echo(typer.style(
+            f'{version} changelog:',
+            fg=typer.colors.BLUE,
+            bold=True
+        ))
+        typer.echo('\n'.join(changelogs))
+    else:
+        typer.style('No changelog provided.', fg=typer.colors.YELLOW)
 
 
 def write_changelogs_to_file(

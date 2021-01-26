@@ -32,12 +32,9 @@ def release(version: str):
 
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
-    write_changelogs_to_file(version, changelogs)
 
-    if changelogs:
-        echo_changelog(version, changelogs)
-    else:
-        typer.echo(typer.style('No changelog provided.', fg=typer.colors.YELLOW))
+    write_changelogs_to_file(version, changelogs, changelog_file)
+    echo_changelog(version, changelogs)
 
     try:
         repo.git.add(changelog_file)
