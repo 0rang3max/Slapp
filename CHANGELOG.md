@@ -1,3 +1,7 @@
+0.3.0
+==========
+* added automatic version incrementation
+
 0.2.4
 ==========
 * main as a default release branch
