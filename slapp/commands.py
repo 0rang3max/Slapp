@@ -1,13 +1,15 @@
 import typer
 import git
 
-from .main import app
-from .config import get_config, set_config
-from .utils import (
+from slapp.main import app
+from slapp.config import get_config, set_config
+from slapp.utils import (
     parse_changelogs_from_repo,
     write_changelogs_to_file,
     echo_changelog,
+    get_autoincremented_version,
 )
+from slapp.constants import VERSION_TYPES
 
 
 @app.command()
@@ -15,12 +17,33 @@ def init():
     set_config()
 
 
+def version_type_autocompletion(incomplete: str):
+    completion = []
+    for version_type in VERSION_TYPES:
+        if version_type.startswith(incomplete):
+            completion.append(version_type)
+    return completion
+
+
 @app.command()
-def release(version: str):
+def release(
+    manual_version: str = typer.Argument(
+        None,
+        help="Manually added version name",
+    ),
+    version_type: str = typer.Option(
+        VERSION_TYPES[1], '--type', '-t',
+        help=f'Version type: {", ".join(VERSION_TYPES)}',
+        autocompletion=version_type_autocompletion
+    ),
+    dry: bool = typer.Option(
+        False,
+        help='Do not perform any actions with git repo'
+    ),
+):
     config = get_config()
     if not config:
         return
-
     try:
         repo = git.Repo(config['repo_directory'].get())
     except git.NoSuchPathError:
@@ -37,9 +60,16 @@ def release(version: str):
 
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
+    version = manual_version or get_autoincremented_version(changelog_file, version_type)
+    if not version:
+        return
 
     write_changelogs_to_file(version, changelogs, changelog_file)
     echo_changelog(version, changelogs)
+
+    if dry:
+        typer.echo('Skipping git actions.')
+        return
 
     try:
         repo.git.add(changelog_file)

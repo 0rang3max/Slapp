@@ -1,7 +1,9 @@
 import os
+import re
 import git
 import marko
 import typer
+from slapp.constants import VERSION_TYPES
 
 
 def extract_changelogs_from_commit(message: str or None,):
@@ -46,7 +48,7 @@ def echo_changelog(version, changelogs):
         ))
         typer.echo('\n'.join(changelogs))
     else:
-        typer.style('No changelog provided.', fg=typer.colors.YELLOW)
+        typer.echo(typer.style('No changelog provided.', fg=typer.colors.YELLOW))
 
 
 def write_changelogs_to_file(
@@ -67,3 +69,42 @@ def write_changelogs_to_file(
         f.seek(0)
         f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
         f.truncate()
+
+
+def get_autoincremented_version(changelog_file: str, version_type: str):
+    DEFAULT_VERSION = '0.1.0'
+    VERSION_REGEX = r'\d{1,}\.\d{1,}\.\d{1,}'
+
+    DEFAULT_ERR = "Couldn't generate a version number."
+
+    if version_type not in VERSION_TYPES:
+        typer.echo(
+            typer.style(
+                f'Version type is invalid, you should use one of theese: {", ".join(VERSION_TYPES)}',
+                fg=typer.colors.RED
+            )
+        )
+        return
+
+    if not os.path.isfile(changelog_file):
+        return DEFAULT_VERSION
+    try:
+        with open(changelog_file, "r") as file:
+            first_line = file.readline()
+    # TODO: use more specific exception
+    except Exception:
+        typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
+        return
+
+    match = re.match(VERSION_REGEX, first_line)
+    if not match:
+        typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
+        return
+
+    old_version = match.string
+    n_list = [int(i) for i in old_version.split('.')]
+    if version_type == 'major':
+        return f'{n_list[0] + 1}.0.0'
+    if version_type == 'minor':
+        return f'{n_list[0]}.{n_list[1] + 1}.0'
+    return f'{n_list[0]}.{n_list[1]}.{n_list[2] + 1}'
