@@ -17,8 +17,8 @@ slapp init
 ```bash
 git add . && git commit -m "* Added some cool features!"
 ```
-- release tag and build auto-changelog in one command
+- generate release tag and build auto-changelog in one command!
 ```bash
-slapp release v0.1
+slapp release
 ```
 
