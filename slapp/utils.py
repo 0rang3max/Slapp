@@ -1,26 +1,13 @@
 import os
 import re
 import git
-import marko
 import typer
 from slapp.constants import VERSION_TYPES
 
 
-def extract_changelogs_from_commit(message: str or None,):
-    changelogs = []
-    if not message or '*' not in message:
-        return changelogs
-
-    for item in marko.parse(message).children:
-        if isinstance(item, marko.block.List):
-            changelogs.extend(
-                [
-                    child.children[0].children[0].children
-                    for child in item.children
-                ]
-            )
-
-    return changelogs
+def extract_changelogs(message: str):
+    changelog_regex = re.compile(r'\* (.*)(?:$|\n)')
+    return changelog_regex.findall(message)
 
 
 def parse_changelogs_from_repo(repo: git.Repo) -> list:
@@ -31,10 +18,10 @@ def parse_changelogs_from_repo(repo: git.Repo) -> list:
         for commit in repo.iter_commits():
             if commit.hexsha == last_tag_commit_hexsha:
                 break
-            changelogs.extend(extract_changelogs_from_commit(commit.message))
+            changelogs.extend(extract_changelogs(commit.message))
     else:
         for commit in repo.iter_commits():
-            changelogs.extend(extract_changelogs_from_commit(commit.message))
+            changelogs.extend(extract_changelogs(commit.message))
 
     return changelogs
 
