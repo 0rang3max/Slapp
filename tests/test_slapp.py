@@ -1,5 +1,12 @@
-from git_releaser import __version__
+from slapp.utils import extract_changelogs
 
 
-def test_version():
-    assert __version__ == '0.1.0'
+def test_extract_changelogs():
+    test_data = {
+        '* changelog': ['changelog'],
+        '* changelog\n* changelog': ['changelog', 'changelog'],
+        'some text\n* changelog\n* changelog': ['changelog', 'changelog'],
+        'some text\n* changelog\n* changelog\nsome text': ['changelog', 'changelog'],
+    }
+    for message, changelog in test_data.items():
+        assert changelog == extract_changelogs(message)
