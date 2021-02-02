@@ -1,3 +1,7 @@
+minor
+==========
+* removed marko
+
 0.3.0
 ==========
 * added automatic version incrementation
