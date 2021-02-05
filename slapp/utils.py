@@ -2,6 +2,7 @@ import os
 import re
 import git
 import typer
+from random import choice
 from slapp.constants import VERSION_TYPES
 
 
@@ -27,12 +28,12 @@ def parse_changelogs_from_repo(repo: git.Repo) -> list:
 
 
 def echo_changelog(version, changelogs):
+    typer.echo(typer.style(
+        version,
+        fg=typer.colors.BLUE,
+        bold=True
+    ))
     if changelogs:
-        typer.echo(typer.style(
-            f'{version} changelog:',
-            fg=typer.colors.BLUE,
-            bold=True
-        ))
         typer.echo('\n'.join(changelogs))
     else:
         typer.echo(typer.style('No changelog provided.', fg=typer.colors.YELLOW))
@@ -99,4 +100,8 @@ def get_autoincremented_version(changelog_file: str, version_type: str):
         typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
         return
 
-    return increment_version(match.string, version_type)
+    return increment_version(match.group(), version_type)
+
+
+def get_random_version_name(random_names):
+    return ' '.join(choice(row) for row in random_names)

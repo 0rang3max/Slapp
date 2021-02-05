@@ -8,6 +8,7 @@ from slapp.utils import (
     write_changelogs_to_file,
     echo_changelog,
     get_autoincremented_version,
+    get_random_version_name
 )
 from slapp.constants import VERSION_TYPES
 
@@ -27,14 +28,18 @@ def version_type_autocompletion(incomplete: str):
 
 @app.command()
 def release(
-    manual_version: str = typer.Argument(
+    arg_version: str = typer.Argument(
         None,
-        help="Manually added version name",
+        help="Manually added version number",
     ),
     version_type: str = typer.Option(
         VERSION_TYPES[1], '--type', '-t',
         help=f'Version type: {", ".join(VERSION_TYPES)}',
         autocompletion=version_type_autocompletion
+    ),
+    arg_version_name: str = typer.Option(
+        None, '--name', '-n',
+        help="Version name",
     ),
     dry: bool = typer.Option(
         False,
@@ -60,9 +65,15 @@ def release(
 
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
-    version = manual_version or get_autoincremented_version(changelog_file, version_type)
+    version = arg_version or get_autoincremented_version(changelog_file, version_type)
     if not version:
         return
+
+    if arg_version_name:
+        version = f'{version} {arg_version_name}'
+    elif config['random_names'].exists():
+        random_name = get_random_version_name(config["random_names"].get())
+        version = f'{version} {random_name}'
 
     write_changelogs_to_file(version, changelogs, changelog_file)
     echo_changelog(version, changelogs)
