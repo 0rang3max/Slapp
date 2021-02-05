@@ -58,10 +58,21 @@ def write_changelogs_to_file(
         f.truncate()
 
 
+def increment_version(old_version: str, version_type: str):
+    major, minor, patch = [int(i) for i in old_version.split('.')]
+    if version_type == 'major':
+        major, minor, patch = major + 1, 0, 0
+    elif version_type == 'minor':
+        minor, patch = minor + 1, 0
+    else:
+        patch += 1
+
+    return f'{major}.{minor}.{patch}'
+
+
 def get_autoincremented_version(changelog_file: str, version_type: str):
     DEFAULT_VERSION = '0.1.0'
     VERSION_REGEX = r'\d{1,}\.\d{1,}\.\d{1,}'
-
     DEFAULT_ERR = "Couldn't generate a version number."
 
     if version_type not in VERSION_TYPES:
@@ -88,10 +99,4 @@ def get_autoincremented_version(changelog_file: str, version_type: str):
         typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
         return
 
-    old_version = match.string
-    n_list = [int(i) for i in old_version.split('.')]
-    if version_type == 'major':
-        return f'{n_list[0] + 1}.0.0'
-    if version_type == 'minor':
-        return f'{n_list[0]}.{n_list[1] + 1}.0'
-    return f'{n_list[0]}.{n_list[1]}.{n_list[2] + 1}'
+    return increment_version(match.string, version_type)
