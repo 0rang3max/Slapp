@@ -60,9 +60,9 @@ def write_changelogs_to_file(
 
 def increment_version(old_version: str, version_type: str):
     major, minor, patch = [int(i) for i in old_version.split('.')]
-    if version_type == 'major':
+    if version_type == VERSION_TYPES[0]:
         major, minor, patch = major + 1, 0, 0
-    elif version_type == 'minor':
+    elif version_type == VERSION_TYPES[1]:
         minor, patch = minor + 1, 0
     else:
         patch += 1
