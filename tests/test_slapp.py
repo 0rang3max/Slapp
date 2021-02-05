@@ -1,4 +1,6 @@
-from slapp.utils import extract_changelogs
+from slapp.utils import (
+    extract_changelogs, increment_version
+)
 
 
 def test_extract_changelogs():
@@ -10,3 +12,9 @@ def test_extract_changelogs():
     }
     for message, changelog in test_data.items():
         assert changelog == extract_changelogs(message)
+
+
+def test_autoincrement():
+    assert increment_version('1.1.1', 'patch') == '1.1.2'
+    assert increment_version('1.1.1', 'minor') == '1.2.0'
+    assert increment_version('1.1.1', 'major') == '2.0.0'
