@@ -7,18 +7,35 @@ Tool for quick tagging and deploying releases to Git. Släpp automatically gener
 pip install slapp
 ```
 
-### Usage
-- init slapp config
+### Quick start
+1. Init slapp config
 ```bash
 slapp init
 ```
-- edit slapp.yml file if needed
-- do some stuff in your repo and commit it with * 
+2. Edit slapp.yml file if needed
+3. Do some stuff in your repo and commit it with * 
 ```bash
 git add . && git commit -m "* Added some cool features!"
 ```
-- generate release tag and build auto-changelog in one command!
+4. Generate release tag and build auto-changelog in one command!
 ```bash
 slapp release
 ```
 
+### Advanced usage
+Advanced usage of `release` command:
+```bash
+slapp release [OPTIONS] [MANUAL_VERSION]
+
+Arguments:
+  [MANUAL_VERSION]  Manually added version name
+
+Options:
+  -t, --type TEXT   Version type: major, minor, patch  [default: minor]
+  --dry / --no-dry  Do not perform any actions with git repo  [default: False]
+  --help            Show this message and exit.
+```
+You can view this help by:
+```bash
+slapp release --help
+```

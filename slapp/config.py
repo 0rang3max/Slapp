@@ -1,15 +1,10 @@
 import os
+
 import confuse
 import typer
 import yaml
 
-CONFIG_FILE = 'slapp.yml'
-DEFAULT_CONFIG = {
-    'repo_directory': '.git',
-    'release_branch': 'main',
-    'changelog_file': 'CHANGELOG.md',
-    'bullet': '*',
-}
+from slapp.constants import CONFIG_FILE, DEFAULT_CONFIG
 
 
 def get_config():
