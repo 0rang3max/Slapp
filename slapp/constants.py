@@ -2,7 +2,7 @@ CONFIG_FILE = 'slapp.yml'
 
 DEFAULT_CONFIG = {
     'repo_directory': '.git',
-    'release_branch': 'main',
+    'release_branch': 'master',
     'changelog_file': 'CHANGELOG.md',
     'bullet': '*',
 }
