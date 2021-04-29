@@ -79,7 +79,7 @@ def release(
         repo.remotes.origin.push()
 
     except Exception as e:
-        typer.echo(typer.style('Some error occured while pushing the changelog', fg=typer.colors.RED))
+        typer.echo(typer.style('Some error occurred while pushing the changelog', fg=typer.colors.RED))
         typer.echo(e)
 
     new_tag = repo.create_tag(version, message=version)
