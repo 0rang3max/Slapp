@@ -1,3 +1,5 @@
+from enum import Enum
+
 CONFIG_FILE = 'slapp.yml'
 
 DEFAULT_CONFIG = {
@@ -7,4 +9,11 @@ DEFAULT_CONFIG = {
     'bullet': '*',
 }
 
-VERSION_TYPES = ('major', 'minor', 'patch')
+
+class ReleaseType(Enum):
+    MAJOR = 'major'
+    MINOR = 'minor'
+    PATCH = 'patch'
+
+    def __str__(self):
+        return self.value

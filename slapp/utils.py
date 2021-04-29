@@ -1,8 +1,21 @@
 import os
 import re
+from typing import Optional
+
 import git
 import typer
-from slapp.constants import VERSION_TYPES
+
+from slapp.version import Version, parse_version
+
+
+def get_last_version_from_repo(repo: git.Repo) -> Optional[Version]:
+    if not repo.tags:
+        return None
+    for tag in sorted(repo.tags, key=lambda t: t.commit.count(), reverse=True):
+        version = parse_version(str(tag))
+        if version:
+            return version
+    return None
 
 
 def extract_changelogs(message: str):
@@ -56,47 +69,3 @@ def write_changelogs_to_file(
         f.seek(0)
         f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
         f.truncate()
-
-
-def increment_version(old_version: str, version_type: str):
-    major, minor, patch = [int(i) for i in old_version.split('.')]
-    if version_type == VERSION_TYPES[0]:
-        major, minor, patch = major + 1, 0, 0
-    elif version_type == VERSION_TYPES[1]:
-        minor, patch = minor + 1, 0
-    else:
-        patch += 1
-
-    return f'{major}.{minor}.{patch}'
-
-
-def get_autoincremented_version(changelog_file: str, version_type: str):
-    DEFAULT_VERSION = '0.1.0'
-    VERSION_REGEX = r'\d{1,}\.\d{1,}\.\d{1,}'
-    DEFAULT_ERR = "Couldn't generate a version number."
-
-    if version_type not in VERSION_TYPES:
-        typer.echo(
-            typer.style(
-                f'Version type is invalid, you should use one of theese: {", ".join(VERSION_TYPES)}',
-                fg=typer.colors.RED
-            )
-        )
-        return
-
-    if not os.path.isfile(changelog_file):
-        return DEFAULT_VERSION
-    try:
-        with open(changelog_file, "r") as file:
-            first_line = file.readline()
-    # TODO: use more specific exception
-    except Exception:
-        typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
-        return
-
-    match = re.match(VERSION_REGEX, first_line)
-    if not match:
-        typer.echo(typer.style(DEFAULT_ERR, fg=typer.colors.RED))
-        return
-
-    return increment_version(match.string, version_type)
