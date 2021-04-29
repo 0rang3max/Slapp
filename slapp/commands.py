@@ -89,7 +89,7 @@ def release(
             return
         version = new_version
     else:
-        version = last_version.increment(release_type) if last_version else Version.default
+        version = last_version.increment(release_type) if last_version else Version.get_default()
 
     echo_success(f'New version is {version}')
 
