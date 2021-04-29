@@ -64,6 +64,8 @@ def release(
     if not version:
         return
 
+    typer.echo(typer.style(f'New version is {version}', fg=typer.colors.GREEN))
+
     write_changelogs_to_file(version, changelogs, changelog_file)
     echo_changelog(version, changelogs)
 
