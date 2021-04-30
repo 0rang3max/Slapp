@@ -6,10 +6,10 @@ from slapp.constants import ReleaseType
 VALID_TAG_REGEX = r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'
 
 
-def parse_version(version_str):
-    if not re.match(VALID_TAG_REGEX, version_str):
+def parse_version(version: str):
+    if not re.match(VALID_TAG_REGEX, version):
         return None
-    major, minor, patch = [int(i) for i in version_str.split('.')]
+    major, minor, patch = [int(i) for i in version.split('.')]
     return Version(major, minor, patch)
 
 
