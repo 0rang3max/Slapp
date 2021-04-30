@@ -7,6 +7,7 @@ from slapp.main import app
 from slapp.utils import (
     get_repo_version_tags,
     get_repo_last_version,
+    get_random_version_name,
     parse_changelogs_from_repo,
     write_changelogs_to_file,
     echo_changelog,
@@ -45,18 +46,18 @@ def get_repo_from_config(config):
 
 @app.command()
 def release(
-    arg_version: str = typer.Argument(
+    manual_version: str = typer.Argument(
         None,
         help='Manually added version name',
+    ),
+    manual_version_name: str = typer.Option(
+        None, '--name', '-n',
+        help="Version name",
     ),
     release_type: str = typer.Option(
         ReleaseType.MINOR.value, '--type', '-t',
         help=f'Release type: {", ".join(ReleaseType.get_values())}',
         autocompletion=release_type_autocompletion
-    ),
-    arg_version_name: str = typer.Option(
-        None, '--name', '-n',
-        help="Version name",
     ),
     dry: bool = typer.Option(
         False,
@@ -102,19 +103,17 @@ def release(
     else:
         version = last_version.increment(release_type) if last_version else Version.get_default()
 
-    echo_success(f'New version is {version}')
-
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
 
-    if arg_version_name:
-        version = f'{version} {arg_version_name}'
+    version_name = version
+    if manual_version_name:
+        version_name = f'{version_name} {manual_version_name}'
     elif config['random_names'].exists():
-        random_name = get_random_version_name(config["random_names"].get())
-        version = f'{version} {random_name}'
-
-    write_changelogs_to_file(version, changelogs, changelog_file)
-    echo_changelog(version, changelogs)
+        version_name = f'{version} {get_random_version_name(config["random_names"].get())}'
+    
+    write_changelogs_to_file(version_name, changelogs, changelog_file)
+    echo_changelog(version_name, changelogs)
 
     if dry:
         typer.echo('Skipping git actions.')

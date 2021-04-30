@@ -1,6 +1,7 @@
 import os
 import re
 from typing import Optional
+from random import choice
 
 import git
 import typer
@@ -72,3 +73,7 @@ def write_changelogs_to_file(
         f.seek(0)
         f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
         f.truncate()
+
+
+def get_random_version_name(random_names):
+    return ' '.join(choice(row) for row in random_names)
