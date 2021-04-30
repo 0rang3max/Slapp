@@ -22,7 +22,10 @@ git add . && git commit -m "* Added some cool features!"
 slapp release
 ```
 
-### Advanced usage
+### Release
+
+Only [Semantic Versioning](https://semver.org) is supported, versions have to be without prefixes or postfixes. 
+
 Advanced usage of `release` command:
 ```bash
 slapp release [OPTIONS] [MANUAL_VERSION]
@@ -31,11 +34,22 @@ Arguments:
   [MANUAL_VERSION]  Manually added version name
 
 Options:
-  -t, --type TEXT   Version type: major, minor, patch  [default: minor]
+  -t, --type TEXT   Release type: major, minor, patch  [default: minor]
   --dry / --no-dry  Do not perform any actions with git repo  [default: False]
   --help            Show this message and exit.
 ```
-You can view this help by:
+
+### Versions
+
+You can view all versions in repo by `versions` command:
 ```bash
-slapp release --help
+slapp versions [OPTIONS]
+
+Options:
+  -l, --last INTEGER  Show only last N versions.
+  -r, --reverse       Order versions by ascending.  [default: False]
+```
+For example, you want to see the earliest three versions:
+```shell
+slapp versions -r -l 3
 ```
