@@ -48,8 +48,10 @@ class Version:
         new_version = copy.deepcopy(self)
         if release_type == ReleaseType.MAJOR:
             new_version.major += 1
+            new_version.minor = new_version.patch = 0
         elif release_type == ReleaseType.MINOR:
             new_version.minor += 1
+            new_version.patch = 0
         else:
             new_version.patch += 1
         return new_version

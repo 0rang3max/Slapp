@@ -38,11 +38,11 @@ def test_version_compare():
     assert Version(1, 2, 0) > Version(1, 1, 15)
 
 
-def test_default_version():
+def test_version_default():
     assert Version.get_default() == Version(0, 1, 0)
 
 
 def test_version_increment():
-    assert Version(1, 1, 1).increment(ReleaseType.MAJOR) == Version(2, 1, 1)
-    assert Version(1, 1, 1).increment(ReleaseType.MINOR) == Version(1, 2, 1)
+    assert Version(1, 1, 1).increment(ReleaseType.MAJOR) == Version(2, 0, 0)
+    assert Version(1, 1, 1).increment(ReleaseType.MINOR) == Version(1, 2, 0)
     assert Version(1, 1, 1).increment(ReleaseType.PATCH) == Version(1, 1, 2)
