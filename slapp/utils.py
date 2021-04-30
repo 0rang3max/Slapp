@@ -26,7 +26,8 @@ def extract_changelogs(message: str):
 def parse_changelogs_from_repo(repo: git.Repo) -> list:
     changelogs = []
     if repo.tags:
-        last_tag = max(repo.tags, key=lambda t: t.commit.count())
+        version_tags = list(filter(lambda tag: parse_version(str(tag)), repo.tags))
+        last_tag = max(version_tags, key=lambda t: t.commit.count())
         last_tag_commit_hexsha = last_tag.commit.hexsha
         for commit in repo.iter_commits():
             if commit.hexsha == last_tag_commit_hexsha:
