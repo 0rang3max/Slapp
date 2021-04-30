@@ -22,7 +22,10 @@ git add . && git commit -m "* Added some cool features!"
 slapp release
 ```
 
-### Advanced usage
+### Release
+
+Only [Semantic Versioning](https://semver.org) is supported, versions have to be without prefixes or postfixes. 
+
 Advanced usage of `release` command:
 ```bash
 slapp release [OPTIONS] [MANUAL_VERSION]
