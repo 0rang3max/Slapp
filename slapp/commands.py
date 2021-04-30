@@ -111,7 +111,7 @@ def release(
         version_name = f'{version_name} {manual_version_name}'
     elif config['random_names'].exists():
         version_name = f'{version} {get_random_version_name(config["random_names"].get())}'
-    
+
     write_changelogs_to_file(version_name, changelogs, changelog_file)
     echo_changelog(version_name, changelogs)
 
@@ -130,14 +130,14 @@ def release(
 
     new_tag = repo.create_tag(str(version), message=f'version {version}')
     repo.remotes.origin.push(new_tag)
-    echo_success(f'New tag pushed!')
+    echo_success('New tag pushed!')
 
 
 @app.command()
 def versions(
     last: int = typer.Option(
         None, '--last', '-l',
-        help=f'Show only last N versions.',
+        help='Show only last N versions.',
     ),
     reverse: bool = typer.Option(
         False, '--reverse', '-r',
