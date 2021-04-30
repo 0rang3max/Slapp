@@ -7,6 +7,7 @@ from slapp.main import app
 from slapp.utils import (
     get_repo_version_tags,
     get_repo_last_version,
+    get_random_version_name,
     parse_changelogs_from_repo,
     write_changelogs_to_file,
     echo_changelog,
@@ -48,6 +49,10 @@ def release(
     manual_version: str = typer.Argument(
         None,
         help='Manually added version name',
+    ),
+    manual_version_name: str = typer.Option(
+        None, '--name', '-n',
+        help="Version name",
     ),
     release_type: str = typer.Option(
         ReleaseType.MINOR.value, '--type', '-t',
@@ -98,13 +103,17 @@ def release(
     else:
         version = last_version.increment(release_type) if last_version else Version.get_default()
 
-    echo_success(f'New version is {version}')
-
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
 
-    write_changelogs_to_file(version, changelogs, changelog_file)
-    echo_changelog(version, changelogs)
+    version_name = version
+    if manual_version_name:
+        version_name = f'{version_name} {manual_version_name}'
+    elif config['random_names'].exists():
+        version_name = f'{version} {get_random_version_name(config["random_names"].get())}'
+
+    write_changelogs_to_file(version_name, changelogs, changelog_file)
+    echo_changelog(version_name, changelogs)
 
     if dry:
         typer.echo('Skipping git actions.')
@@ -121,14 +130,14 @@ def release(
 
     new_tag = repo.create_tag(str(version), message=f'version {version}')
     repo.remotes.origin.push(new_tag)
-    echo_success(f'New tag pushed!')
+    echo_success('New tag pushed!')
 
 
 @app.command()
 def versions(
     last: int = typer.Option(
         None, '--last', '-l',
-        help=f'Show only last N versions.',
+        help='Show only last N versions.',
     ),
     reverse: bool = typer.Option(
         False, '--reverse', '-r',

@@ -1,5 +1,5 @@
 from slapp.constants import ReleaseType
-from slapp.utils import extract_changelogs
+from slapp.utils import extract_changelogs, get_random_version_name
 from slapp.version import parse_version, Version
 
 
@@ -12,6 +12,14 @@ def test_extract_changelogs():
     }
     for message, changelog in test_data.items():
         assert changelog == extract_changelogs(message)
+
+
+def test_get_random_name():
+    random_names_first = ['nice', 'smart', 'pretty']
+    random_names_second = ['dog', 'cow', 'cat']
+    random_name = get_random_version_name([random_names_first, random_names_second])
+    assert random_name.split(' ')[0] in random_names_first
+    assert random_name.split(' ')[1] in random_names_second
 
 
 def test_parse_version():

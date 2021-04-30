@@ -1,6 +1,7 @@
 import os
 import re
 from typing import Optional
+from random import choice
 
 import git
 import typer
@@ -43,12 +44,12 @@ def parse_changelogs_from_repo(repo: git.Repo) -> list:
 
 
 def echo_changelog(version, changelogs):
+    typer.echo(typer.style(
+        version,
+        fg=typer.colors.BLUE,
+        bold=True
+    ))
     if changelogs:
-        typer.echo(typer.style(
-            f'{version} changelog:',
-            fg=typer.colors.BLUE,
-            bold=True
-        ))
         typer.echo('\n'.join(changelogs))
     else:
         typer.echo(typer.style('No changelog provided.', fg=typer.colors.YELLOW))
@@ -72,3 +73,7 @@ def write_changelogs_to_file(
         f.seek(0)
         f.write(f'{version}\n{divider}\n{rendered_changelog}\n\n{content}')
         f.truncate()
+
+
+def get_random_version_name(random_names):
+    return ' '.join(choice(row) for row in random_names)
