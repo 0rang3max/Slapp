@@ -119,9 +119,9 @@ def release(
         echo_error('Some error occurred while pushing the changelog.')
         typer.echo(exc)
 
-        new_tag = repo.create_tag(str(version), message=f'version {version}')
-        repo.remotes.origin.push(new_tag)
-        echo_success(f'New tag pushed!')
+    new_tag = repo.create_tag(str(version), message=f'version {version}')
+    repo.remotes.origin.push(new_tag)
+    echo_success(f'New tag pushed!')
 
 
 @app.command()
