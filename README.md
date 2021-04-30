@@ -38,7 +38,18 @@ Options:
   --dry / --no-dry  Do not perform any actions with git repo  [default: False]
   --help            Show this message and exit.
 ```
-You can view this help by:
+
+### Versions
+
+You can view all versions in repo by `versions` command:
 ```bash
-slapp release --help
+slapp versions [OPTIONS]
+
+Options:
+  -l, --last INTEGER  Show only last N versions.
+  -r, --reverse       Order versions by ascending.  [default: False]
+```
+For example, you want to see the earliest three versions:
+```shell
+slapp versions -r -l 3
 ```

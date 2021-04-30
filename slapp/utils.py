@@ -8,14 +8,16 @@ import typer
 from slapp.version import Version, parse_version
 
 
-def get_last_version_from_repo(repo: git.Repo) -> Optional[Version]:
+def get_repo_version_tags(repo: git.Repo):
     if not repo.tags:
-        return None
-    for tag in sorted(repo.tags, key=lambda t: t.commit.count(), reverse=True):
-        version = parse_version(str(tag))
-        if version:
-            return version
-    return None
+        return []
+    version_tags = list(filter(lambda tag: parse_version(str(tag)), repo.tags))
+    return sorted(version_tags, key=lambda t: t.commit.count(), reverse=True)
+
+
+def get_repo_last_version(repo: git.Repo) -> Optional[Version]:
+    tags = get_repo_version_tags(repo)
+    return parse_version(str(tags[0])) if tags else None
 
 
 def extract_changelogs(message: str):
@@ -25,9 +27,9 @@ def extract_changelogs(message: str):
 
 def parse_changelogs_from_repo(repo: git.Repo) -> list:
     changelogs = []
-    if repo.tags:
-        version_tags = list(filter(lambda tag: parse_version(str(tag)), repo.tags))
-        last_tag = max(version_tags, key=lambda t: t.commit.count())
+    version_tags = get_repo_version_tags(repo)
+    if version_tags:
+        last_tag = version_tags[0]
         last_tag_commit_hexsha = last_tag.commit.hexsha
         for commit in repo.iter_commits():
             if commit.hexsha == last_tag_commit_hexsha:
