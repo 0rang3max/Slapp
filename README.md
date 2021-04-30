@@ -1,5 +1,4 @@
-# 
-🇸🇪 Släpp
+# 🇸🇪 Släpp
 
 Tool for quick tagging and deploying releases to Git. Släpp automatically generates and pushes CHANGELOG file to your repo, based on your commit history.
 
