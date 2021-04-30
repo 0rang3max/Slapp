@@ -148,7 +148,7 @@ def versions(
     if reverse:
         tags.reverse()
 
-    if last and len(tags) > last:
+    if last:
         tags = tags[:last]
 
     for tag in tags:
