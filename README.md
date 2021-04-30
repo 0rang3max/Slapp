@@ -54,7 +54,7 @@ For example, you want to see the earliest three versions:
 slapp versions -r -l 3
 ```
 
-### Add ubuntu like namings
+### Add randomly generated namings
 
 You can randomly name your releases from list or several lists of words.
 Just add _random_names_ option to your config file:
