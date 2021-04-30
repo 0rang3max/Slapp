@@ -146,7 +146,7 @@ def versions(
     tags = get_repo_version_tags(repo)
 
     if reverse:
-        tags = list(reversed(tags))
+        tags.reverse()
 
     if last and len(tags) > last:
         tags = tags[:last]
