@@ -3,9 +3,8 @@
 * added versions history command
 * fixed bug with first version skipping
 * versions now parsed from git tags instead of changelog file
-* add versions command
-* reset low-order version parts on increment
-* improve versions, add version validation and rename release type arg
+* improve versions, add version validation 
+* release type arg renamed
 
 0.3.1
 ==========
