@@ -31,7 +31,7 @@ Arguments:
   [MANUAL_VERSION]  Manually added version name
 
 Options:
-  -t, --type TEXT   Version type: major, minor, patch  [default: minor]
+  -t, --type TEXT   Release type: major, minor, patch  [default: minor]
   --dry / --no-dry  Do not perform any actions with git repo  [default: False]
   --help            Show this message and exit.
 ```
