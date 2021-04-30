@@ -1,3 +1,15 @@
+0.4.1
+==========
+* fix new tag pushing
+
+0.4.0
+==========
+* added versions history command
+* fixed bug with first version skipping
+* versions now parsed from git tags instead of changelog file
+* improve versions, add version validation 
+* release type arg renamed
+
 0.3.1
 ==========
 * removed marko
