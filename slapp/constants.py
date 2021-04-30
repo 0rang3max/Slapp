@@ -17,3 +17,7 @@ class ReleaseType(Enum):
 
     def __str__(self):
         return self.value
+
+    @classmethod
+    def get_values(cls):
+        return list(map(str, cls))

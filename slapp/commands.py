@@ -51,7 +51,7 @@ def release(
     ),
     release_type: str = typer.Option(
         ReleaseType.MINOR.value, '--type', '-t',
-        help=f'Release type: {", ".join(map(str, ReleaseType))}',
+        help=f'Release type: {", ".join(ReleaseType.get_values())}',
         autocompletion=release_type_autocompletion
     ),
     dry: bool = typer.Option(
@@ -80,7 +80,7 @@ def release(
     except ValueError:
         echo_error(
             f'Release type is invalid, you should use one '
-            f'of these: {", ".join(list(map(str, ReleaseType)))}.'
+            f'of these: {", ".join(ReleaseType.get_values())}.'
         )
         return
 
