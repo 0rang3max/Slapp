@@ -51,7 +51,7 @@ def release(
     ),
     release_type: str = typer.Option(
         ReleaseType.MINOR.value, '--type', '-t',
-        help=f'Release type: {", ".join(list(map(str, ReleaseType)))}',
+        help=f'Release type: {", ".join(map(str, ReleaseType))}',
         autocompletion=release_type_autocompletion
     ),
     dry: bool = typer.Option(
