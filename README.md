@@ -53,3 +53,17 @@ For example, you want to see the earliest three versions:
 ```shell
 slapp versions -r -l 3
 ```
+
+### Add ubuntu like namings
+
+You can randomly name your releases from list or several lists of words.
+Just add _random_names_ option to your config file:
+```yaml
+. . .
+random_names:
+- [ Aggressive, Brave, Calm ]
+- ['Dog', 'Cow', 'Cat'] 
+```
+
+Släpp will automatically generate a release name for you by mixing words from given lists. For example: 
+`0.1.0 Brave Cat` 
