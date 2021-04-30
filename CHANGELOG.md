@@ -1,3 +1,7 @@
+0.5.0 BREDSKÄR
+==========
+* added random names for releases
+
 0.4.1
 ==========
 * fix new tag pushing
