@@ -106,7 +106,7 @@ def release(
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
 
-    version_name = version
+    version_name = str(version)
     if manual_version_name:
         version_name = f'{version_name} {manual_version_name}'
     elif config['random_names'].exists():
