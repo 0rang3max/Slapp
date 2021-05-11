@@ -1,3 +1,7 @@
+0.5.1 LÅGIS
+==========
+
+
 0.5.0 BREDSKÄR
 ==========
 * added random names for releases
