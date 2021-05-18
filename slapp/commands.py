@@ -103,14 +103,14 @@ def release(
     else:
         version = last_version.increment(release_type) if last_version else Version.get_default()
 
-    changelogs = parse_changelogs_from_repo(repo)
-    changelog_file = config['changelog_file'].get()
-
     version_name = str(version)
     if manual_version_name:
         version_name = f'{version_name} {manual_version_name}'
     elif config['random_names'].exists():
         version_name = f'{version} {get_random_version_name(config["random_names"].get())}'
+
+    changelogs = parse_changelogs_from_repo(repo)
+    changelog_file = config['changelog_file'].get()
 
     write_changelogs_to_file(version_name, changelogs, changelog_file)
     echo_changelog(version_name, changelogs)
