@@ -39,6 +39,23 @@ Options:
   --help            Show this message and exit.
 ```
 
+### Version file
+
+Sometimes you need to store the version in repository files. In addition to the changelog updating, you can write
+actual version to file. Just add to the config: 
+```shell
+version_file: path/to/file
+version_file_template: <printf-style python template>
+```
+
+Parameter `version_file_template` is optional, default template is:
+```shell
+version = '%s'
+```
+
+See more about printf-style strings formatting in [python docs](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting).
+
+
 ### Versions
 
 You can view all versions in repo by `versions` command:

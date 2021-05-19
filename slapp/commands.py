@@ -2,7 +2,7 @@ import git
 import typer
 
 from slapp.config import get_config, set_config
-from slapp.constants import ReleaseType
+from slapp.constants import ReleaseType, DEFAULT_VERSION_TEMPLATE
 from slapp.main import app
 from slapp.utils import (
     get_repo_version_tags,
@@ -11,6 +11,7 @@ from slapp.utils import (
     parse_changelogs_from_repo,
     write_changelogs_to_file,
     echo_changelog,
+    write_version_to_file,
 )
 from slapp.version import parse_version, Version
 
@@ -109,6 +110,13 @@ def release(
     elif config['random_names'].exists():
         version_name = f'{version} {get_random_version_name(config["random_names"].get())}'
 
+    version_file = config['version_file'].exists()
+    if version_file:
+        version_file = config['version_file'].get()
+        template = config['version_file_template']
+        template = template.get() if template.exists() else DEFAULT_VERSION_TEMPLATE
+        write_version_to_file(str(version), version_file, template)
+
     changelogs = parse_changelogs_from_repo(repo)
     changelog_file = config['changelog_file'].get()
 
@@ -121,9 +129,13 @@ def release(
 
     try:
         repo.git.add(changelog_file)
-        repo.index.commit(f'Update {changelog_file}')
+        message = f'Update {changelog_file}'
+        if version_file:
+            repo.git.add(version_file)
+            message += ' and version file'
+        message += f' for version {version}'
+        repo.index.commit(message)
         repo.remotes.origin.push()
-
     except git.GitError as exc:
         echo_error('Some error occurred while pushing the changelog.')
         typer.echo(exc)
