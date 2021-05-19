@@ -2,6 +2,8 @@ from enum import Enum
 
 CONFIG_FILE = 'slapp.yml'
 
+DEFAULT_VERSION_TEMPLATE = "version = '%s'"
+
 DEFAULT_CONFIG = {
     'repo_directory': '.git',
     'release_branch': 'main',

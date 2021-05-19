@@ -21,6 +21,12 @@ def get_repo_last_version(repo: git.Repo) -> Optional[Version]:
     return parse_version(str(tags[0])) if tags else None
 
 
+def write_version_to_file(version: str, file_path: str, template: str):
+    with open(file_path, 'w+') as file:
+        version_string = template % version
+        file.write(version_string)
+
+
 def extract_changelogs(message: str):
     changelog_regex = re.compile(r'\* (.*)(?:$|\n)')
     return changelog_regex.findall(message)
